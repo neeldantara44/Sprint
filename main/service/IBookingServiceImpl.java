@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.stream.Collectors;
 import com.cg.main.beans.Booking;
+import com.cg.main.beans.Customer;
 import com.cg.main.exception.BookingDetailsNotFoundException;
 import com.cg.main.exception.BookingNotFoundException;
 import com.cg.main.repository.IBookingRepositoryIntf;
@@ -19,24 +20,22 @@ public class IBookingServiceImpl implements IBookingServiceIntf {
 
 	@Autowired
 	private IBookingRepositoryIntf bookingrepository;
-//	@Autowired
-//	private ICustomerServiceImpl icsi;
+	@Autowired
+	private ICustomerServiceImpl icsi;
 
-	public Booking addBooking(Booking booking) {
-		/*
-   	 Customer customer2 = icsi.getCustomer(userId);
-           Booking order1= new Booking();
-           order1.setOrderId(order.getOrderId());
+	public Booking addBooking(String custId, Booking booking) {
+   	 	   Customer customer2 = icsi.getCustomer(custId);
+           Booking booking1= new Booking();
+           booking1.setBookingId(booking.getBookingId());
            
 //         System.out.println(customer2);
-           order1.setBillingDate(order.getBillingDate());
-           order1.setAmount(order.getAmount());
-           order1.setPaymentMethod(order.getPaymentMethod());
-           order1.setCustomer(order.getCustomer());
+           booking1.setBookingDate(booking.getBookingDate());
+           booking1.setBookingTime(booking.getBookingTime());
+           booking1.setServiceType(booking.getServiceType());
+           booking1.setCustomerDetails(customer2);
            
-           return orderrepository.saveAndFlush(order1);
-   	 * */
-		return bookingrepository.saveAndFlush(booking);
+           return bookingrepository.saveAndFlush(booking1);
+		//return bookingrepository.saveAndFlush(booking);
 		
 	}
 
