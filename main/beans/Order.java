@@ -18,27 +18,36 @@ import javax.persistence.*;
 
 public class Order {  
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long orderId;
     @Column
     private Double amount;
     @Column
     private LocalDate billingDate;
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "paymentId", referencedColumnName = "paymentId")
     private Payment paymentMethod;
-//    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    @JoinColumn(name = "userId", referencedColumnName = "userId")
-//    private Customer customer;
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private Customer customer;
     
     public Order(){}
 
-	public Order(Long orderId, Double amount, LocalDate billingDate, Payment paymentMethod) {
+	public Order(Long orderId, Double amount, LocalDate billingDate, Payment paymentMethod, Customer customer) {
 		super();
 		this.orderId = orderId;
 		this.amount = amount;
 		this.billingDate = billingDate;
 		this.paymentMethod = paymentMethod;
-//		this.customer = customer;
+		this.customer = customer;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Long getOrderId() {
