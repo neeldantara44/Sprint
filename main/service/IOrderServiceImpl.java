@@ -1,8 +1,5 @@
 package com.cg.main.service;
 
- 
-
-
 import java.util.List;
 
  
@@ -32,7 +29,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.main.exception.OrderNotFoundException;
 import com.cg.main.exception.PaymentMethodEmptyException;
-
+import com.cg.main.beans.Customer;
 import com.cg.main.beans.Order;
 import com.cg.main.beans.Payment;
 import com.cg.main.exception.ImproperPaymentMethodException;
@@ -46,33 +43,24 @@ public class IOrderServiceImpl implements IOrderServiceIntf {
     
     @Autowired
     private IOrderRepositoryIntf orderrepository;
-//  @Autowired
-//	private ICustomerServiceImpl icsi;
+    @Autowired
+	private ICustomerServiceImpl icsi;
     @Autowired
     private IPaymentServiceImpl ipsi;
     
     @Override
-	public Order addOrder(Order order) {
-    	/*
-    	 Customer customer2 = br.getCustomer(userId);
-            Order order1= new Order();
-            order1.setOrderId(order.getOrderId());
+	public Order addOrder(String custId, Order order) {
+    	 Customer customer2 = icsi.getCustomer(custId);
+         Order order1= new Order();
+         
+         order1.setOrderId(order.getOrderId());            
+         order1.setBillingDate(order.getBillingDate());
+         order1.setAmount(order.getAmount());
+         order1.setPaymentMethod(ipsi.addPayment(order.getPaymentMethod()));
+         order1.setCustomer(customer2);
             
-//            System.out.println(customer2);
-            order1.setBillingDate(order.getBillingDate());
-            order1.setAmount(order.getAmount());
-            order1.setPaymentMethod(order.getPaymentMethod());
-            order1.setCustomer(order.getCustomer());
-            
-            return orderrepository.saveAndFlush(order1);
-    	 * */
-		Order order1 = new Order();
-		order1.setOrderId(order.getOrderId());
-		order1.setAmount(order.getAmount());
-		order1.setBillingDate(order.getBillingDate());
-		order1.setPaymentMethod(ipsi.addPayment(order.getPaymentMethod()));
-		return orderrepository.save(order1);
-	}
+         return orderrepository.saveAndFlush(order1);
+		}
 //		if(order.getPaymentMethod().compareToIgnoreCase("offline")==0||order.getPaymentMethod().compareToIgnoreCase("online")==0)
 //		{
 //			orderrepository.saveAndFlush(order);
