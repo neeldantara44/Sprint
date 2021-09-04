@@ -20,59 +20,39 @@ import com.cg.main.service.IOrderServiceIntf;
 
 import java.util.List;
 
- 
-
- 
-
 @RestController
 public class OrderController {
-
- 
-
 
 @Autowired
    private IOrderServiceImpl iosi;
 
- 
-
-@PostMapping("/addOrder")
-public Order addOrder(@RequestBody Order order)
+	@PostMapping("/addOrder/{userId}")
+public Order addOrder(@PathVariable String userId, @RequestBody Order order)
 {
-     return iosi.addOrder(order);
+    return iosi.addOrder(userId, order);
+		}
 
- 
-
-}
     @DeleteMapping("/removeOrder/{orderId}")
 public Order remove(@PathVariable Long orderId)
 {
     return iosi.removeOrder(orderId);
-    }
-
- 
+    	}
 
     @PutMapping("/updateOrder/{orderId}")
-public Order update(@PathVariable Long orderId,@RequestBody Order order)
+public Order update(@PathVariable Long orderId, @RequestBody Order order)
 {
     return iosi.updateOrder(orderId, order);
-    
-    }
+    	}
     
     @GetMapping("/getOrder/{orderId}")    
 public Order get(@PathVariable Long orderId)
 {
-    return    iosi.getOrderDetails(orderId);
+    return iosi.getOrderDetails(orderId);
         }
     
     @GetMapping("/getAllOrders")
-    public List<Order> getAllOrders(){
-
- 
-
-        return iosi.getAllOrders();
+public List<Order> getAllOrders()
+{ 	
+    return iosi.getAllOrders();
         }
-    
-
- 
-
 }
