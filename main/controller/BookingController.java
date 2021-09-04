@@ -24,10 +24,9 @@ import com.cg.main.service.IBookingServiceImpl;
 public class BookingController {
 	@Autowired
 	private IBookingServiceImpl bsi ;
-	@PostMapping("/addb")
-public void add(@RequestBody Booking b) {
-		bsi.addBooking(b);
-	
+	@PostMapping("/addb/{custId}")
+	public void add(@PathVariable String custId, @RequestBody Booking b) {
+	bsi.addBooking(custId, b);	
 }
 	@DeleteMapping("/removeb/{id}")
 public void remove(@PathVariable long id) {
@@ -78,4 +77,3 @@ public Booking get(@PathVariable Long id) {
 //			bsi.getBookingsByCustomer(customerId);
 //		
 //	}
-
