@@ -11,7 +11,7 @@ import com.cg.main.beans.Booking;
 
 
 public interface IBookingServiceIntf { 
-	public Booking addBooking(Booking booking);
+	public Booking addBooking(String userId, Booking booking);
 	public Booking removeBooking(long bookingId);
 	public void updateBooking(Long bookingId, Booking booking);
 	public Booking getBookingDetails(Long bookingId);
