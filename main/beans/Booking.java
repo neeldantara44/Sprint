@@ -7,6 +7,7 @@ import java.util.stream.Collector;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,30 +30,32 @@ public class Booking {
 	@Column
 	private String serviceType;
 
-//	@OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "userId", referencedColumnName = "userId")
-//	private Customer customerDetails;
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+	private Customer customerDetails;
 //	@OneToMany(mappedBy="customerItem")
-//    @JoinColumn(name = "bookingId")
-//
+//  @JoinColumn(name = "bookingId")
 //	private Set <CustomerItem> oSet;
+	
 	public Booking() {}
-//	public Booking(Long bookingId,LocalDate bookingDate,LocalTime bookingTime,String serviceType,Customer customerDetails, Set <CustomerItem> oSet) {
-//		super();
-//		this.bookingId= bookingId;
-//		this.bookingDate= bookingDate;
-//		this.bookingTime= bookingTime;
-//		this.serviceType= serviceType;
-////		this.customerDetails= customerDetails;
-////		this.oSet= oSet;	
-	public Booking(Long bookingId,LocalDate bookingDate,LocalTime bookingTime,String serviceType) {
-	super();
-	this.bookingId= bookingId;
-	this.bookingDate= bookingDate;
-	this.bookingTime= bookingTime;
-	this.serviceType= serviceType;
+	
+	public Booking(Long bookingId,LocalDate bookingDate,LocalTime bookingTime,String serviceType,Customer customerDetails) {
+		super();
+		this.bookingId= bookingId;
+		this.bookingDate= bookingDate;
+		this.bookingTime= bookingTime;
+		this.serviceType= serviceType;
+		this.customerDetails= customerDetails;
 	}
-//	}
+
+	public Customer getCustomerDetails() {
+		return customerDetails;
+	}
+
+	public void setCustomerDetails(Customer customerDetails) {
+		this.customerDetails = customerDetails;
+	}
+
 	public Long getBookingId() {
 		return bookingId;
 	}
