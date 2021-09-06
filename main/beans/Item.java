@@ -3,12 +3,15 @@ package com.cg.main.beans;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.sun.istack.NotNull;
 
 
 
@@ -17,6 +20,10 @@ import javax.persistence.Table;
 @Table
 public class Item {
 	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name="bookingId",referencedColumnName="bookingId")
+	private Booking bookingId;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long itemId;
@@ -32,26 +39,19 @@ public class Item {
 	private String material;
 	@Column
 	private String description;
-	//@ManyToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name="userId",referencedColumnName="userId")
-	//private Customer userId;
-	//@ManyToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name="bookingId",referencedColumnName="bookingId")
-	//private Booking bookingId;
 	
 	public Item() {}
 
-	/*public Item(Long itemId, @NotNull(message="Name should not be empty") String name, @NotNull(message="Color should not be empty")String color,String category,@NotNull(message="Quantity should not be empty")Integer quantity,String material,String description) {
-	this.itemId=itemId;
-	this.name=name;
-	this.color=color;
-	this.quantity = quantity;
-	this.material = material;
-	this.description = description;
-	}
-	*/
-	public Item(Long itemId, String name, String color, String category, Integer quantity, String material,
-			String description) {
+//	public Item(Long itemId, @NotNull(message="Name should not be empty") String name, @NotNull(message="Color should not be empty")String color,String category,@NotNull(message="Quantity should not be empty")Integer quantity,String material,String description) {
+//	this.itemId=itemId;
+//	this.name=name;
+//	this.color=color;
+//	this.quantity = quantity;
+//	this.material = material;
+//	this.description = description;
+//	}
+	
+	public Item(Long itemId, String name, String color, String category, Integer quantity, String material, String description) {
 		super();
 		this.itemId = itemId;
 		this.name = name;
@@ -60,7 +60,6 @@ public class Item {
 		this.quantity = quantity;
 		this.material = material;
 		this.description = description;
-		//this.userId=userId;
 	}
 
 
@@ -74,7 +73,15 @@ public class Item {
 		this.material = material;
 		this.description = description;
 	}
+	
+	public Booking getBookingId() {
+		return bookingId;
+	}
 
+	public void setBookingId(Booking bookingId) {
+		this.bookingId = bookingId;
+	}
+	
 	public Long getItemId() {
 		return itemId;
 	}
@@ -152,3 +159,4 @@ public class Item {
 	
 
 }
+
