@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.main.beans.Booking;
 import com.cg.main.beans.Item;
 import com.cg.main.exception.ItemDetailsNotFoundException;
 import com.cg.main.exception.ItemNameEmptyException;
@@ -21,8 +22,8 @@ public class ICustomerItemServiceImpl implements ICustomerItemServiceIntf{
 
 	@Autowired
 	private ICustomerItemRepositoryIntf itemrepository;
-//	@Autowired
-//	private ICustomerServiceImpl icsi;
+	@Autowired
+	private IBookingServiceImpl bsi;
 	
 	@Override
 	public Item addItem(Item item) {
@@ -40,7 +41,6 @@ public class ICustomerItemServiceImpl implements ICustomerItemServiceIntf{
            
            return orderrepository.saveAndFlush(order1);
    	    */
-		
 		try {
 			if(item.getName().isEmpty() || item.getName().length()==0) {
 				throw new ItemNameEmptyException("Item name is Empty, Please provide proper item name");
@@ -113,14 +113,21 @@ public class ICustomerItemServiceImpl implements ICustomerItemServiceIntf{
 	}
 
 	
-	/*public List<Item> getItemsByCustomer(Long customerId) {
+	public List<Item> getItemsByCustomer(String customerId) {
 		// TODO Auto-generated method stub
-		return itemrepository.getItemsByCustomer(customerId);
-	}*/
-	
-
-	
-	
-	
-
+		List<Booking> b_list = bsi.getAllBookings();
+		for(Booking b : b_list)
+		{
+			if(b.getCustomerDetails().getUserId().compareToIgnoreCase(customerId) == 0)
+			{
+				return b.getItem();
+			}
+			else
+			{
+				return null;
+			}
+		}
+		return null;
+	}
 }
+
