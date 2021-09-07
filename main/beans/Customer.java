@@ -18,6 +18,7 @@ import javax.validation.constraints.*;
 public class Customer {
 	@Id
     @Column(name="id")
+	@NotEmpty(message="UserID is Required")
 	private String userId;
 	
 	@Column
