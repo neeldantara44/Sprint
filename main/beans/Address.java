@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "address")
@@ -15,16 +16,22 @@ public class Address {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	@Column
+	@NotEmpty(message = "Door Number is required")
 	private String doorNo;
 	@Column
+	@NotEmpty(message = "Street Name is required")
 	private String street;
 	@Column
+	@NotEmpty(message = "Area Name is required")
 	private String area;
 	@Column
+	@NotEmpty(message = "City Name is required")
 	private String city;
 	@Column
+	@NotEmpty(message = "State Name is required")
 	private String state;
 	@Column
+	@NotEmpty(message = "Pin Code is required")
 	private Integer pincode;
 	
 	public Address() {}
