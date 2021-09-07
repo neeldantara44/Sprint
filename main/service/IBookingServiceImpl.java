@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.stream.Collectors;
 import com.cg.main.beans.Booking;
 import com.cg.main.beans.Customer;
+import com.cg.main.beans.Item;
 import com.cg.main.exception.BookingDetailsNotFoundException;
 import com.cg.main.exception.BookingNotFoundException;
 import com.cg.main.repository.IBookingRepositoryIntf;
@@ -22,6 +23,8 @@ public class IBookingServiceImpl implements IBookingServiceIntf {
 	private IBookingRepositoryIntf bookingrepository;
 	@Autowired
 	private ICustomerServiceImpl icsi;
+	@Autowired
+	private ICustomerItemServiceImpl cis;
 
 	public Booking addBooking(String custId, Booking booking) {
    	 	   Customer customer2 = icsi.getCustomer(custId);
@@ -33,6 +36,12 @@ public class IBookingServiceImpl implements IBookingServiceIntf {
            booking1.setBookingTime(booking.getBookingTime());
            booking1.setServiceType(booking.getServiceType());
            booking1.setCustomerDetails(customer2);
+           List<Item> item1 = new ArrayList<Item>();
+           for(Item i : booking.getItem())
+           {
+        	   item1.add(cis.addItem(i));
+           }
+           booking1.setItem(item1);
            
            return bookingrepository.saveAndFlush(booking1);
 		//return bookingrepository.saveAndFlush(booking);
