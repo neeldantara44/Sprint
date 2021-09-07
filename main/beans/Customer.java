@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.*;
+
 
 @Entity
 @Table
@@ -17,12 +19,22 @@ public class Customer {
 	@Id
     @Column(name="id")
 	private String userId;
+	
 	@Column
+	@NotEmpty(message="Name is Required")
 	private String name;
+	
 	@Column
+	@NotEmpty(message="Email ID can't be empty")
+    @Size(min=2, max=30, message="Enter Valid Email ID ")
+    @Email(message="Enter Valid Email ID Format!")
 	private String email;
+	
 	@Column
+	@NotEmpty(message="Contact Number Required! it can't be empty")
+    @Size(min=10, max=12, message="Invalid Contact Number! Enter Valid Number")
 	private String contactNo;
+	
 	@Column
 	private LocalDate dob;
 	
